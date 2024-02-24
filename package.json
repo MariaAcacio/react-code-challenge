@@ -2,7 +2,7 @@
   "name": "code-challenge",
   "private": true,
   "version": "0.1.0",
-  "author": "Israel Santiago",
+  "author": "Maria Acacio",
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",
