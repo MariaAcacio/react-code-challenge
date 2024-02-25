@@ -12,3 +12,7 @@ export const getTypesNames = (types) => {
   const names = types.map((item) => item.type.name);
   return names;
 };
+
+export const generateId = () => {
+  return Math.floor(10000 + Math.random() * 90000);
+};

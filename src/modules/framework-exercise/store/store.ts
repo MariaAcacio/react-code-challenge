@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import pokemonReducer from "./slice/pokemonSlice";
+import userReducer from "./slice/userSlice";
 import { pokemonApi } from "src/apis/pokemon.api";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 export const store = configureStore({
   reducer: {
     pokemon: pokemonReducer,
+    user: userReducer,
     [pokemonApi.reducerPath]: pokemonApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

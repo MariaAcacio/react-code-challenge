@@ -1,4 +1,3 @@
-import firebase from "firebase/app";
 import "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import {
@@ -17,8 +16,6 @@ const firebaseConfig = {
   appId: "1:257890254076:web:82029e3c6e129217926b79",
 };
 
-// Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -26,7 +23,6 @@ export async function getFirebasePokemons() {
   const pokemonColllection = collection(db, "pokemons");
   const pokemonSnapshot = await getDocs(pokemonColllection);
   const pokemonSavedList = pokemonSnapshot.docs.map((doc) => doc.data());
-
   return pokemonSavedList;
 }
 
@@ -34,8 +30,7 @@ export async function saveFirebasePokemon(pokemon) {
   const pokemonCollection = collection(db, "pokemons");
 
   try {
-    const docRef = await addDoc(pokemonCollection, pokemon);
-    console.log({ docRef });
+    await addDoc(pokemonCollection, pokemon);
   } catch (e) {
     console.log("error adding the document", e);
   }

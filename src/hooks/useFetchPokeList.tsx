@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getIdFromUrl } from "src/utils/functions";
 import { setPokemonList } from "src/modules/framework-exercise/store/slice/pokemonSlice";
 import { useDispatch } from "react-redux";
-import { useSelectPokemonList } from "src/hooks/useSelectorPokeList";
+import { useSelectPokemonList } from "src/hooks/useSelectPokeList";
 import { PokemonType } from "src/types/docTypes";
 
 export function useFetchPokeList() {

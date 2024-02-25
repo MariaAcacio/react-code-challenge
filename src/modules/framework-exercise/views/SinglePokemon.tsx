@@ -2,10 +2,7 @@ import { useDispatch } from "react-redux";
 import { setfavoritePokemons } from "../store/slice/pokemonSlice";
 import { useSelectFavPokemon } from "src/hooks/useSelectFavPokemon";
 import { getAbilitiesNames, getTypesNames } from "src/utils/functions";
-import {
-  getFirebasePokemons,
-  saveFirebasePokemon,
-} from "../../../../firebase.api";
+import { getFirebasePokemons, saveFirebasePokemon } from "src/db/firebase.api";
 import { useEffect } from "react";
 
 export const SinglePokemon = ({ pokemonInfo }) => {
@@ -37,7 +34,7 @@ export const SinglePokemon = ({ pokemonInfo }) => {
         );
       }
     } catch (error) {
-      console.error("Error al guardar el dato:", error);
+      console.error("Error saving data:", error);
     }
   };
 
