@@ -5,7 +5,6 @@ import { useGetPokemonByIdQuery } from "src/apis/pokemon.api";
 export const PokemonLayout = () => {
   const param = useParams();
   const { data, isLoading, isError } = useGetPokemonByIdQuery(param.id);
-  console.log({ data });
 
   return (
     <>

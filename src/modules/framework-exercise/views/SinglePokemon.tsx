@@ -2,23 +2,18 @@ import { useDispatch } from "react-redux";
 import { setfavoritePokemons } from "../store/slice/pokemonSlice";
 import { useSelectFavPokemon } from "src/hooks/useSelectFavPokemon";
 import { getAbilitiesNames, getTypesNames } from "src/utils/functions";
-import { getFirebasePokemons, saveFirebasePokemon } from "src/db/firebase.api";
-import { useEffect } from "react";
+import { saveFirebasePokemon } from "src/db/firebase.api";
+import { useSelectUser } from "src/hooks/useSelectUser";
 
 export const SinglePokemon = ({ pokemonInfo }) => {
   const favoritePokemon = useSelectFavPokemon();
+  const userInfo = useSelectUser();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getFirebasePokemons();
-      console.log({ data });
-    };
-    fetchData();
-  }, [favoritePokemon]);
 
   const handleSavePokemon = async () => {
     const favPokemonSavedInfo = {
+      userId: userInfo.id,
+      userName: userInfo.name,
       name: pokemonInfo.name,
       id: pokemonInfo.id,
       defaultSprite: pokemonInfo.sprites.front_default,

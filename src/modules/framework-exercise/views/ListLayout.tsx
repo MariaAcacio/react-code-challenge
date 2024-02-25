@@ -5,17 +5,25 @@ import { setUser } from "src/modules/framework-exercise/store/slice/userSlice";
 import { useSelectUser } from "src/hooks/useSelectUser";
 import { List } from "./List";
 import { generateId } from "src/utils/functions";
+import { useNavigate } from "react-router-dom";
+import { saveFirebaseUsers } from "src/db/firebase.api";
 
 export const ListLayout = () => {
   const { data, isLoading, isError } = useGetPokemonsQuery("");
   const [currentName, setCurrentName] = useState("");
   const { userList, ...user } = useSelectUser();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleInputChange = (evnt) => {
+  const handleInputChange = async (evnt) => {
     setCurrentName(evnt.target.value);
-    if (evnt.key === "Enter") {
-      dispatch(setUser({ id: generateId(), name: currentName }));
+    try {
+      if (evnt.key === "Enter") {
+        await saveFirebaseUsers({ id: generateId(), name: currentName });
+        dispatch(setUser({ id: generateId(), name: currentName }));
+      }
+    } catch (error) {
+      console.error("Error saving data:", error);
     }
   };
 
@@ -56,6 +64,10 @@ export const ListLayout = () => {
       ) : (
         <List pokemonList={data} />
       )}
+
+      <button onClick={() => navigate("/pokemon/favorites")}>
+        See favorite pokémons
+      </button>
     </>
   );
 };

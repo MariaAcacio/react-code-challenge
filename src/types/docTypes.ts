@@ -12,6 +12,8 @@ export type PokemonDetailsType = {
 };
 
 export type FavoritePokemonsType = {
+  userName: string;
+  userId: number;
   name: string;
   id: number;
   defaultSprite: string;

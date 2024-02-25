@@ -19,6 +19,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Pokemons
+
 export async function getFirebasePokemons() {
   const pokemonColllection = collection(db, "pokemons");
   const pokemonSnapshot = await getDocs(pokemonColllection);
@@ -31,6 +33,25 @@ export async function saveFirebasePokemon(pokemon) {
 
   try {
     await addDoc(pokemonCollection, pokemon);
+  } catch (e) {
+    console.log("error adding the document", e);
+  }
+}
+
+// Users
+
+export async function getFirebaseUsers() {
+  const userColllection = collection(db, "users");
+  const userSnapshot = await getDocs(userColllection);
+  const userSavedList = userSnapshot.docs.map((doc) => doc.data());
+  return userSavedList;
+}
+
+export async function saveFirebaseUsers(userDetails) {
+  const userCollection = collection(db, "users");
+
+  try {
+    await addDoc(userCollection, userDetails);
   } catch (e) {
     console.log("error adding the document", e);
   }

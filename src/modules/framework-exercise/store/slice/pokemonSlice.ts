@@ -17,14 +17,14 @@ const pokemonSlice = createSlice({
   name: "pokemonList",
   initialState,
   reducers: {
-    setPokemonList: (state, action) => {
-      state.pokemonList = action.payload;
+    setPokemonList: (state, { payload }) => {
+      state.pokemonList = payload;
     },
-    setfavoritePokemons: (state, action) => {
-      state.favoritePokemons = action.payload;
+    setfavoritePokemons: (state, { payload }) => {
+      state.favoritePokemons = payload;
     },
-    setListQuantity: (state, action) => {
-      state.listQuantity = action.payload;
+    setListQuantity: (state, { payload }) => {
+      state.listQuantity = payload;
     },
   },
   extraReducers: () => {},
