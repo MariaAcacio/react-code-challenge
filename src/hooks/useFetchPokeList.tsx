@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { getIdFromUrl } from "../../src/utils/functions";
-import { setPokemonList } from "../modules/framework-exercise/store/slice/pokemonSlice";
+import { getIdFromUrl } from "src/utils/functions";
+import { setPokemonList } from "src/modules/framework-exercise/store/slice/pokemonSlice";
 import { useDispatch } from "react-redux";
-import { useSelectPokemonList } from "../hooks/useSelectorPokeList";
-import { PokemonType } from "../../src/types/docTypes";
+import { useSelectPokemonList } from "src/hooks/useSelectorPokeList";
+import { PokemonType } from "src/types/docTypes";
 
 export function useFetchPokeList() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const dispatch = useDispatch();
   const pokemonList = useSelectPokemonList();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (pokemonList.length === 0) {
@@ -27,6 +27,8 @@ export function useFetchPokeList() {
         .catch((error) => {
           setHasError(true);
           console.error(error);
+        })
+        .finally(() => {
           setIsLoading(false);
         });
     }

@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PokemonType as PokemonType } from "../../../../types/docTypes";
+import { PokemonType, FavoritePokemonsType } from "src/types/docTypes";
 
 type PokemonSliceState = {
   pokemonList: PokemonType[];
-  pokemonSelected: PokemonType | null;
+  favoritePokemons: FavoritePokemonsType[];
   listQuantity: number;
 };
 
 const initialState: PokemonSliceState = {
   pokemonList: [],
-  pokemonSelected: null,
+  favoritePokemons: [],
   listQuantity: 12,
 };
 
@@ -20,8 +20,8 @@ const pokemonSlice = createSlice({
     setPokemonList: (state, action) => {
       state.pokemonList = action.payload;
     },
-    setPokemonSelected: (state, action) => {
-      state.pokemonSelected = action.payload;
+    setfavoritePokemons: (state, action) => {
+      state.favoritePokemons = action.payload;
     },
     setListQuantity: (state, action) => {
       state.listQuantity = action.payload;
@@ -30,6 +30,6 @@ const pokemonSlice = createSlice({
   extraReducers: () => {},
 });
 
-export const { setPokemonList, setPokemonSelected, setListQuantity } =
+export const { setPokemonList, setfavoritePokemons, setListQuantity } =
   pokemonSlice.actions;
 export default pokemonSlice.reducer;

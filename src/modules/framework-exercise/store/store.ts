@@ -1,11 +1,19 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import pokemonReducer from "./slice/pokemonSlice";
 
-export const Store = configureStore({
+export const store = configureStore({
   reducer: {
     pokemon: pokemonReducer,
   },
 });
 
-export type StoreType = ReturnType<typeof Store.getState>;
-export type storeDispatchType = typeof Store.dispatch;
+// Infer the `StoreType` and `AppDispatch` types from the store itself
+export type StoreType = ReturnType<typeof store.getState>;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type storeDispatchType = typeof store.dispatch;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  StoreType,
+  unknown,
+  Action<string>
+>;

@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import List from "./modules/framework-exercise/views/List";
-import SinglePokemon from "./modules/framework-exercise/views/SinglePokemon";
 import Navbar from "./components/Navbar";
 import Instructions from "./modules/Instructions";
 import Response from "./modules/logical-exercise/views/Response";
+import { ListLayout } from "./modules/framework-exercise/views/ListLayout";
+import { PokemonLayout } from "./modules/framework-exercise/views/PokemonLayout";
 
 function App() {
   return (
@@ -13,9 +13,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Instructions />} />
           <Route path="/logical-exercise" element={<Response />} />
-          <Route path="/pokemon" element={<List />} />
+          <Route path="/pokemon" element={<ListLayout />} />
           <Route path="/instructions" element={<Instructions />} />
-          <Route path="/pokemon/:id" element={<SinglePokemon />} />
+          <Route path="/pokemon/:id" element={<PokemonLayout />} />
         </Routes>
       </main>
     </Router>

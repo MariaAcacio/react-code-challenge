@@ -3,7 +3,6 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
@@ -19,13 +18,11 @@
     "outDir": "build",
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,                
+    "strict": true,
     "strictNullChecks": false,
     "target": "esnext",
     "useUnknownInCatchVariables": false,
-    "paths": {
-			"src/*": ["./src"],
-		},
+    "baseUrl": "."
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
