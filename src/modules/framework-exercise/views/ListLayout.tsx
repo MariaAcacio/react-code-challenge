@@ -1,17 +1,17 @@
-import { useFetchPokeList } from "src/hooks/useFetchPokeList";
 import { List } from "./List";
+import { useGetPokemonsQuery } from "src/apis/pokemon.api";
 
 export const ListLayout = () => {
-  const { pokemonList, isLoading, hasError } = useFetchPokeList();
+  const { data, isLoading, isError } = useGetPokemonsQuery("");
 
   return (
     <>
       {isLoading ? (
         <div>Loading...</div>
-      ) : hasError ? (
+      ) : isError ? (
         <div>Something went wrong!</div>
       ) : (
-        <List pokemonList={pokemonList} />
+        <List pokemonList={data} />
       )}
     </>
   );

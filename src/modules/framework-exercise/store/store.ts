@@ -1,11 +1,17 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import pokemonReducer from "./slice/pokemonSlice";
+import { pokemonApi } from "src/apis/pokemon.api";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 export const store = configureStore({
   reducer: {
     pokemon: pokemonReducer,
+    [pokemonApi.reducerPath]: pokemonApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(pokemonApi.middleware),
 });
+setupListeners(store.dispatch);
 
 // Infer the `StoreType` and `AppDispatch` types from the store itself
 export type StoreType = ReturnType<typeof store.getState>;

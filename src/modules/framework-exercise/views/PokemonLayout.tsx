@@ -1,19 +1,20 @@
-import { useFetchPokeDetails } from "src/hooks/useFetchPokeDetails";
 import { useParams } from "react-router-dom";
 import { SinglePokemon } from "./SinglePokemon";
+import { useGetPokemonByIdQuery } from "src/apis/pokemon.api";
 
 export const PokemonLayout = () => {
   const param = useParams();
-  const { pokemon, isLoading, hasError } = useFetchPokeDetails(param.id);
+  const { data, isLoading, isError } = useGetPokemonByIdQuery(param.id);
+  console.log({ data });
 
   return (
     <>
       {isLoading ? (
         <p>Loading...</p>
-      ) : hasError ? (
+      ) : isError ? (
         <p>Something went wrong</p>
       ) : (
-        <SinglePokemon pokemonInfo={pokemon} />
+        <SinglePokemon pokemonInfo={data} />
       )}
     </>
   );
