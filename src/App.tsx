@@ -5,6 +5,7 @@ import Response from "./modules/logical-exercise/views/Response";
 import { ListLayout } from "./modules/framework-exercise/views/ListLayout";
 import { PokemonLayout } from "./modules/framework-exercise/views/PokemonLayout";
 import { FavoritePokemonsLayout } from "./modules/framework-exercise/views/FavoritePokemonsLayout";
+import { ROUTES } from "./utils/routes";
 
 function App() {
   return (
@@ -12,15 +13,12 @@ function App() {
       <Navbar />
       <main className="container">
         <Routes>
-          <Route path="/" element={<Instructions />} />
-          <Route path="/logical-exercise" element={<Response />} />
-          <Route path="/pokemon" element={<ListLayout />} />
-          <Route path="/instructions" element={<Instructions />} />
-          <Route
-            path="/pokemon/favorites"
-            element={<FavoritePokemonsLayout />}
-          />
-          <Route path="/pokemon/:id" element={<PokemonLayout />} />
+          <Route path={ROUTES.HOME} element={<Instructions />} />
+          <Route path={ROUTES.LOGICAL_EXERCISE} element={<Response />} />
+          <Route path={ROUTES.POKEMON} element={<ListLayout />} />
+          <Route path={ROUTES.INSTRUCTIONS} element={<Instructions />} />
+          <Route path={ROUTES.FAVORITES} element={<FavoritePokemonsLayout />} />
+          <Route path={ROUTES.SINGLE_POKEMON} element={<PokemonLayout />} />
         </Routes>
       </main>
     </Router>

@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { getFirebasePokemons } from "src/db/firebase.api";
-import { setUser } from "../store/slice/userSlice";
 import { useSelectUser } from "src/hooks/useSelectUser";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "src/utils/routes";
+import { UserButtons } from "src/components/UserButtons";
 
 export const FavoritePokemonsLayout = () => {
   const { userList, ...user } = useSelectUser();
   const [pokeList, setPokeList] = useState([]);
-  const dispatch = useDispatch();
+  const navigateTo = useNavigate();
 
   useEffect(() => {
+    if (user.name === "") {
+      navigateTo(ROUTES.POKEMON);
+    }
     const fetchData = async () => {
       const firebaseData = await getFirebasePokemons();
       setPokeList(firebaseData.filter((item) => item.userName === user.name));
@@ -21,14 +25,7 @@ export const FavoritePokemonsLayout = () => {
     <>
       <div>
         favorite pokemons
-        {userList.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => dispatch(setUser({ id: item.id, name: item.name }))}
-          >
-            {item.name}
-          </button>
-        ))}
+        <UserButtons />
       </div>
 
       <div>

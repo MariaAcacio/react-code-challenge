@@ -16,8 +16,7 @@ export type FavoritePokemonsType = {
   userId: number;
   name: string;
   id: number;
-  defaultSprite: string;
-  shinySprite: string;
+  sprite: string;
   abilities: string[];
   types: string[];
 };
