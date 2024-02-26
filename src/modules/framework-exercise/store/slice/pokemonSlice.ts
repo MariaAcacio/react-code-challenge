@@ -4,13 +4,11 @@ import { PokemonType, FavoritePokemonsType } from "src/types/docTypes";
 type PokemonSliceState = {
   pokemonList: PokemonType[];
   favoritePokemons: FavoritePokemonsType[];
-  listQuantity: number;
 };
 
 const initialState: PokemonSliceState = {
   pokemonList: [],
   favoritePokemons: [],
-  listQuantity: 12,
 };
 
 const pokemonSlice = createSlice({
@@ -23,13 +21,9 @@ const pokemonSlice = createSlice({
     setfavoritePokemons: (state, { payload }) => {
       state.favoritePokemons = payload;
     },
-    setListQuantity: (state, { payload }) => {
-      state.listQuantity = payload;
-    },
   },
   extraReducers: () => {},
 });
 
-export const { setPokemonList, setfavoritePokemons, setListQuantity } =
-  pokemonSlice.actions;
+export const { setPokemonList, setfavoritePokemons } = pokemonSlice.actions;
 export default pokemonSlice.reducer;

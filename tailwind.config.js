@@ -9,14 +9,6 @@ export default withMT({
     "./src/components/*.{js,ts,jsx,tsx}",
     "./src/layouts/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
-    extend: {
-      colors: {
-        "poke-yellow": "#FFCC01",
-        "poke-blue": "#3462AE",
-        "poke-red": "#E33E3E",
-      },
-    },
-  },
+  theme,
   plugins: [tailwindScrollbar({ nocompatible: true })],
 });

@@ -5,7 +5,7 @@ import { ROUTES } from "src/utils/routes";
 export const List = ({ pokemonList }: { pokemonList?: PokemonType[] }) => {
   return (
     <div>
-      <h3 className="mt-5">Pokemon List</h3>
+      <h3>Pokemon List</h3>
       <ul>
         {pokemonList?.map((item) => (
           <li key={item.id} className="text-primary">

@@ -35,11 +35,12 @@ export const UserInput = () => {
           onChange={(evnt) => handleInputChange(evnt)}
           onKeyDown={(evnt) => handleInputChange(evnt)}
           placeholder="Enter your name"
+          style={{ padding: "5px", marginTop: "50px" }}
         />
       ) : (
         <h1
           onClick={() => dispatch(setUser({ id: 0, name: "" }))}
-          style={{ cursor: "pointer" }}
+          style={{ padding: "5px", marginTop: "50px", cursor: "pointer" }}
           className="pointer-event"
         >
           Welcome {user.name}
