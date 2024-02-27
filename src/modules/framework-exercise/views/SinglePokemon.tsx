@@ -33,8 +33,8 @@ export const SinglePokemon = ({ pokemonInfo }) => {
       name: pokemonInfo.name,
       id: pokemonInfo.id,
       sprite: selectedSprite,
-      types: getNamesFromArray(pokemonInfo.types, "types"),
-      abilities: getNamesFromArray(pokemonInfo.abilities, "abilities"),
+      types: getNamesFromArray(pokemonInfo.types, "type"),
+      abilities: getNamesFromArray(pokemonInfo.abilities, "ability"),
     };
     try {
       if (!isAlreadyFavorite) {
