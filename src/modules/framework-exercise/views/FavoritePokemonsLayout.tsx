@@ -16,6 +16,8 @@ export const FavoritePokemonsLayout = () => {
     if (user.name === "") {
       navigateTo(ROUTES.POKEMON);
     }
+    // good, but there are some other options to improve this by using dictionaries
+    // as well as storing the data in a different way to avoid duplicating data
     setPokeList(favoritePokemons.filter((item) => item.userName === user.name));
   }, [user.name]);
 
