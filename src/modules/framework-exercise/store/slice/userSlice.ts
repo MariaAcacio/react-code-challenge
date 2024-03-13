@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { StoreType } from "../store";
 
 type UserSliceType = {
   name: string;
@@ -32,3 +34,6 @@ const userSlice = createSlice({
 
 export const { setUser, setUserList } = userSlice.actions;
 export default userSlice.reducer;
+
+export const useSelectUser = () =>
+  useSelector((state: StoreType) => state.user);

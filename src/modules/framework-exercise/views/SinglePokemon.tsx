@@ -1,12 +1,15 @@
 import { useDispatch } from "react-redux";
 import { setfavoritePokemons } from "../store/slice/pokemonSlice";
-import { useSelectFavPokemon } from "src/hooks/useSelectFavPokemon";
+import { useSelectFavPokemon } from "src/modules/framework-exercise/store/slice/pokemonSlice";
 import {
   getNamesFromArray,
-  isPokemonAlreadyFavorite,
+  getUsersWithThisPokemon,
 } from "src/utils/functions";
-import { saveFirebasePokemon } from "src/db/firebase.api";
-import { useSelectUser } from "src/hooks/useSelectUser";
+import {
+  saveFirebasePokemon,
+  updateFirebasePokemon,
+} from "src/db/firebase.api";
+import { useSelectUser } from "src/modules/framework-exercise/store/slice/userSlice";
 import { useState } from "react";
 import { MapList } from "src/components/MapList";
 import "src/css/SinglePokemonStyles.css";
@@ -16,33 +19,36 @@ export const SinglePokemon = ({ pokemonInfo }) => {
   const favoritePokemon = useSelectFavPokemon();
   const userInfo = useSelectUser();
   const dispatch = useDispatch();
+  const isAlreadyFavorite =
+    !!favoritePokemon[pokemonInfo.name]?.userIds?.[userInfo.id];
 
-  const isAlreadyFavorite = isPokemonAlreadyFavorite({
-    pokemonList: favoritePokemon,
-    pokemonId: pokemonInfo.id,
-    userName: userInfo.name,
-  });
+  const selectedSprite = isShinySprite
+    ? pokemonInfo.sprites.front_shiny
+    : pokemonInfo.sprites.front_default;
 
   const handleSavePokemon = async () => {
-    const selectedSprite = isShinySprite
-      ? pokemonInfo.sprites.front_shiny
-      : pokemonInfo.sprites.front_default;
     const favPokemonSavedInfo = {
-      userId: userInfo.id,
-      userName: userInfo.name,
+      userIds: getUsersWithThisPokemon(
+        favoritePokemon[pokemonInfo.name]?.userIds,
+        userInfo.id
+      ),
       name: pokemonInfo.name,
       id: pokemonInfo.id,
       sprite: selectedSprite,
       types: getNamesFromArray(pokemonInfo.types, "type"),
       abilities: getNamesFromArray(pokemonInfo.abilities, "ability"),
     };
+    const isPokemonInDb = !!favoritePokemon[pokemonInfo.name];
     try {
-      if (!isAlreadyFavorite) {
-        await saveFirebasePokemon(favPokemonSavedInfo);
-        dispatch(
-          setfavoritePokemons([...favoritePokemon, favPokemonSavedInfo])
-        );
-      }
+      await (isPokemonInDb
+        ? updateFirebasePokemon(favPokemonSavedInfo)
+        : saveFirebasePokemon(favPokemonSavedInfo));
+      dispatch(
+        setfavoritePokemons({
+          ...favoritePokemon,
+          [pokemonInfo.name]: favPokemonSavedInfo,
+        })
+      );
     } catch (error) {
       console.error("Error saving data:", error);
     }
@@ -55,15 +61,7 @@ export const SinglePokemon = ({ pokemonInfo }) => {
           className=" contentImg"
           onClick={() => setIsShinySprite(!isShinySprite)}
         >
-          <img
-            className="w-100 "
-            src={
-              isShinySprite
-                ? pokemonInfo.sprites?.front_shiny
-                : pokemonInfo.sprites?.front_default
-            }
-            alt={pokemonInfo.name}
-          />
+          <img className="w-100 " src={selectedSprite} alt={pokemonInfo.name} />
         </div>
         <div className="descriptionStyles">
           <h2 className="titleStyles">{pokemonInfo.name}</h2>

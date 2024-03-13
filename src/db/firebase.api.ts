@@ -5,7 +5,11 @@ import {
   collection,
   getDocs,
   addDoc,
+  updateDoc,
+  doc,
+  setDoc,
 } from "firebase/firestore/lite";
+import { buildDictionary } from "src/utils/functions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDf65SSRenl4mXiZKSVPa4V4z8ilmzac80",
@@ -20,31 +24,46 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Pokemons
-
 export async function getFirebasePokemons() {
   const pokemonColllection = collection(db, "pokemons");
   const pokemonSnapshot = await getDocs(pokemonColllection);
-  const pokemonSavedList = pokemonSnapshot.docs.map((doc) => doc.data());
-  return pokemonSavedList;
+  const dictionary = buildDictionary(
+    pokemonSnapshot.docs.map((doc) => doc.data()),
+    "name"
+  );
+
+  return dictionary;
 }
 
 export async function saveFirebasePokemon(pokemon) {
-  const pokemonCollection = collection(db, "pokemons");
-
+  const pokemonDoc = doc(db, "pokemons", pokemon.name);
   try {
-    await addDoc(pokemonCollection, pokemon);
+    await setDoc(pokemonDoc, pokemon);
+  } catch (e) {
+    console.log("error adding the document", e);
+  }
+}
+export async function updateFirebasePokemon(pokemon) {
+  const pokemonDoc = doc(db, "pokemons", pokemon.name);
+  try {
+    await updateDoc(pokemonDoc, { userIds: pokemon.userIds });
   } catch (e) {
     console.log("error adding the document", e);
   }
 }
 
 // Users
-
+// this function doesn't have try/catch, so if it fails, the app may crash
 export async function getFirebaseUsers() {
   const userColllection = collection(db, "users");
-  const userSnapshot = await getDocs(userColllection);
-  const userSavedList = userSnapshot.docs.map((doc) => doc.data());
-  return userSavedList;
+  try {
+    const userSnapshot = await getDocs(userColllection);
+    // same comment as above about the dictionaries
+    const userSavedList = userSnapshot.docs.map((doc) => doc.data());
+    return userSavedList;
+  } catch (e) {
+    console.log("error getting the users", e);
+  }
 }
 
 export async function saveFirebaseUsers(userDetails) {

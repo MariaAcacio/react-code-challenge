@@ -1,5 +1,6 @@
 import React from "react";
 
+// why did you use divs instead of a table?
 export const PokemonsGrid = ({ pokeList }) => {
   const getBorderBotton = (index) => {
     return index !== pokeList.length - 1 ? "1px solid black" : "none";
@@ -16,18 +17,10 @@ export const PokemonsGrid = ({ pokeList }) => {
         overflow: "hidden",
       }}
     >
-      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>
-        Picture
-      </div>
-      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>
-        Name
-      </div>
-      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>
-        Ability
-      </div>
-      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>
-        Type
-      </div>
+      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>Picture</div>
+      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>Name</div>
+      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>Ability</div>
+      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>Type</div>
 
       {pokeList.map((item, index) => (
         <React.Fragment key={item.id}>

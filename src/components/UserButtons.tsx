@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getFirebaseUsers } from "src/db/firebase.api";
-import { useSelectUser } from "src/hooks/useSelectUser";
+import { useSelectUser } from "src/modules/framework-exercise/store/slice/userSlice";
 import {
   setUser,
   setUserList,

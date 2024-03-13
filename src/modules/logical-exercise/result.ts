@@ -1,6 +1,7 @@
 export function fewerChangeSheets(array: number[]): number {
-  // add here your code
-  let lowestNumber = Number.POSITIVE_INFINITY;
+  // good job, congrats!
+  // how did you come up with this solution?
+  let lowestNumber = Number.POSITIVE_INFINITY; // why did you use this value?
   for (let i = 0; i < array.length - 1; i++) {
     for (let j = i + 1; j < array.length; j++) {
       const partial = array[i] - array[j];

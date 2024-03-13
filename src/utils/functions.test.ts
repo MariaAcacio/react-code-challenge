@@ -1,20 +1,4 @@
-import {
-  getIdFromUrl,
-  getNamesFromArray,
-  generateId,
-  isPokemonAlreadyFavorite,
-} from "./functions";
-
-describe("testing getIdFromUrl function", () => {
-  it("should extract the correct ID from the URL", () => {
-    expect(getIdFromUrl("https://pokeapi.co/api/v2/pokemon/1/")).toBe(1);
-    expect(getIdFromUrl("https://pokeapi.co/api/v2/pokemon/3/")).toBe(3);
-    expect(getIdFromUrl("https://pokeapi.co/api/v2/pokemon/17/")).toBe(17);
-    expect(getIdFromUrl("https://pokeapi.co/api/v2/pokemon/21/")).toBe(21);
-    expect(getIdFromUrl("https://pokeapi.co/api/v2/pokemon/143/")).toBe(143);
-    expect(getIdFromUrl("https://pokeapi.co/api/v2/pokemon/200/")).toBe(200);
-  });
-});
+import { getNamesFromArray, generateId } from "./functions";
 
 describe("testing getNamesFromArray function", () => {
   it("should return an array of 1 string representing the ability name", () => {
@@ -69,52 +53,5 @@ describe("testing generateId function", () => {
     const id5 = generateId();
     expect(id5).toBeGreaterThanOrEqual(10000);
     expect(id5).toBeLessThanOrEqual(99999);
-  });
-});
-
-describe("testing isPokemonAlreadyFavorite function", () => {
-  it("should return false since there are no Pokemons saved as favorites", () => {
-    const pokemonList = [];
-    const pokemonId = 1;
-    const userName = "user1";
-    expect(isPokemonAlreadyFavorite({ pokemonList, pokemonId, userName })).toBe(
-      false
-    );
-  });
-
-  it("should return true since the Pokemon is already saved as a favorite for this user", () => {
-    const pokemonList = [
-      { id: 1, userName: "user1" },
-      { id: 2, userName: "user2" },
-    ];
-    const pokemonId = 1;
-    const userName = "user1";
-    expect(isPokemonAlreadyFavorite({ pokemonList, pokemonId, userName })).toBe(
-      true
-    );
-  });
-
-  it("should return false since the Pokemon is not saved as a favorite", () => {
-    const pokemonList = [
-      { id: 1, userName: "user1" },
-      { id: 2, userName: "user2" },
-    ];
-    const pokemonId = 3;
-    const userName = "user1";
-    expect(isPokemonAlreadyFavorite({ pokemonList, pokemonId, userName })).toBe(
-      false
-    );
-  });
-
-  it("should return false since the Pokemon is not saved as a favorite for this user", () => {
-    const pokemonList = [
-      { id: 1, userName: "user1" },
-      { id: 2, userName: "user2" },
-    ];
-    const pokemonId = 1;
-    const userName = "user3";
-    expect(isPokemonAlreadyFavorite({ pokemonList, pokemonId, userName })).toBe(
-      false
-    );
   });
 });
