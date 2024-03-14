@@ -4,7 +4,6 @@ import {
   getFirestore,
   collection,
   getDocs,
-  addDoc,
   updateDoc,
   doc,
   setDoc,
@@ -26,13 +25,16 @@ const db = getFirestore(app);
 // Pokemons
 export async function getFirebasePokemons() {
   const pokemonColllection = collection(db, "pokemons");
-  const pokemonSnapshot = await getDocs(pokemonColllection);
-  const dictionary = buildDictionary(
-    pokemonSnapshot.docs.map((doc) => doc.data()),
-    "name"
-  );
-
-  return dictionary;
+  try {
+    const pokemonSnapshot = await getDocs(pokemonColllection);
+    const dictionary = buildDictionary(
+      pokemonSnapshot.docs.map((doc) => doc.data()),
+      "name"
+    );
+    return dictionary;
+  } catch (e) {
+    console.log("error getting the pokemons", e);
+  }
 }
 
 export async function saveFirebasePokemon(pokemon) {
@@ -53,24 +55,27 @@ export async function updateFirebasePokemon(pokemon) {
 }
 
 // Users
-// this function doesn't have try/catch, so if it fails, the app may crash
 export async function getFirebaseUsers() {
   const userColllection = collection(db, "users");
   try {
     const userSnapshot = await getDocs(userColllection);
-    // same comment as above about the dictionaries
-    const userSavedList = userSnapshot.docs.map((doc) => doc.data());
-    return userSavedList;
+    const dictionary = buildDictionary(
+      userSnapshot.docs.map((doc) => doc.data()),
+      "name"
+    );
+    console.log({ dictionary });
+
+    return dictionary;
   } catch (e) {
     console.log("error getting the users", e);
   }
 }
 
 export async function saveFirebaseUsers(userDetails) {
-  const userCollection = collection(db, "users");
+  const userDoc = doc(db, "users", userDetails.name);
 
   try {
-    await addDoc(userCollection, userDetails);
+    await setDoc(userDoc, userDetails);
   } catch (e) {
     console.log("error adding the document", e);
   }

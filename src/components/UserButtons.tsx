@@ -10,13 +10,14 @@ import {
 export const UserButtons = () => {
   const { userList } = useSelectUser();
   const dispatch = useDispatch();
+  const userListArray = Object.values(userList);
 
   useEffect(() => {
     const fetchUsers = async () => {
       const fetchedUsers = await getFirebaseUsers();
       dispatch(setUserList(fetchedUsers));
     };
-    if (userList.length === 0) {
+    if (userListArray.length === 0) {
       fetchUsers();
     }
   }, []);
@@ -33,7 +34,7 @@ export const UserButtons = () => {
 
   return (
     <div className="p-5">
-      {userList?.map((item) => (
+      {userListArray?.map((item) => (
         <button
           className="mx-1 px-4 "
           style={buttonStyle}

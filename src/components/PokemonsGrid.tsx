@@ -1,66 +1,55 @@
-import React from "react";
+import "src/css/PokemonsGridStyles.css";
+import { ThCell } from "./ThCell";
 
-// why did you use divs instead of a table?
 export const PokemonsGrid = ({ pokeList }) => {
-  const getBorderBotton = (index) => {
-    return index !== pokeList.length - 1 ? "1px solid black" : "none";
-  };
+  const tableTitles = ["Picture", "Name", "Ability", "Type"];
+  const hasPokemons = pokeList.length > 0;
   return (
-    <div
+    <table
       style={{
-        display: "grid",
-        gridTemplateColumns: "auto auto auto auto",
-        gap: "10px",
-        textAlign: "center",
-        border: "1px solid black",
+        borderCollapse: "collapse",
+        width: "100%",
+        border: "2px solid black",
         borderRadius: "5px",
-        overflow: "hidden",
       }}
     >
-      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>Picture</div>
-      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>Name</div>
-      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>Ability</div>
-      <div style={{ fontWeight: "bold", borderBottom: "1px solid black" }}>Type</div>
-
-      {pokeList.map((item, index) => (
-        <React.Fragment key={item.id}>
-          <div
-            style={{
-              borderBottom: getBorderBotton(index),
-            }}
-          >
-            <img src={item.sprite} alt={item.name} style={{ width: "100px" }} />
-          </div>
-          <div
-            style={{
-              borderBottom: getBorderBotton(index),
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {item.name}
-          </div>
-          <div
-            style={{
-              borderBottom: getBorderBotton(index),
-            }}
-          >
-            {item.abilities.map((ability, ind) => (
-              <p key={ind}>{`${ability}`}</p>
-            ))}
-          </div>
-          <div
-            style={{
-              borderBottom: getBorderBotton(index),
-            }}
-          >
-            {item.types.map((type, ind) => (
-              <p key={ind}>{type}</p>
-            ))}
-          </div>
-        </React.Fragment>
-      ))}
-    </div>
+      <thead>
+        <tr>
+          {tableTitles.map((title, index) => (
+            <ThCell key={index} title={title} />
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {hasPokemons ? (
+          pokeList.map((item) => (
+            <tr key={item.id}>
+              <td className="tdStyle">
+                <img
+                  src={item.sprite}
+                  alt={item.name}
+                  style={{ width: "100px" }}
+                />
+              </td>
+              <td className="tdStyle">{item.name}</td>
+              <td className="tdStyle">
+                {item.abilities.map((ability, ind) => (
+                  <p key={ind}>{ability}</p>
+                ))}
+              </td>
+              <td className="tdStyle">
+                {item.types.map((type, ind) => (
+                  <p key={ind}>{type}</p>
+                ))}
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td className="noPokemons">No pokemons to show</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
   );
 };

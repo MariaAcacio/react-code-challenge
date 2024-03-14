@@ -5,13 +5,16 @@ import { StoreType } from "../store";
 type UserSliceType = {
   name: string;
   id: number;
-  userList: { name: string; id: number }[];
+  userList: UserListType;
+};
+type UserListType = {
+  [key: string]: { name: string; id: number };
 };
 
 const initialState: UserSliceType = {
   name: "",
   id: 0,
-  userList: [],
+  userList: {},
 };
 
 const userSlice = createSlice({
@@ -21,9 +24,9 @@ const userSlice = createSlice({
     setUser: (state, { payload }) => {
       state.name = payload.name;
       state.id = payload.id;
-      const isThere = state.userList.find((item) => item.name === payload.name);
+      const isThere = state.userList[payload.name];
       if (payload.name !== "" && !isThere) {
-        state.userList.push(payload);
+        state.userList[payload.name] = payload;
       }
     },
     setUserList: (state, { payload }) => {

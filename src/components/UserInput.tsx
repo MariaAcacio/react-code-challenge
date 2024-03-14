@@ -11,20 +11,15 @@ export const UserInput = () => {
   const dispatch = useDispatch();
 
   const handleInputChange = async (evnt) => {
-    setCurrentName(evnt.target.value);
+    const newlyAddedName = evnt.target.value;
+    setCurrentName(newlyAddedName);
     try {
       if (evnt.key === "Enter") {
-        /*  if we used dictionary, we can use hasOwnProperty method for better performance instead of maping the whole array */
-        const isRepeated = userList.find((item) => item.name === currentName);
+        const isRepeated = userList.hasOwnProperty(newlyAddedName);
         if (currentName === "" || isRepeated) {
           return;
         }
-        // await saveFirebaseUsers({ id: generateId(), name: currentName });
-        // dispatch(setUser({ id: generateId(), name: currentName }));
 
-        /* it's better to create an obj for the user once, and pass it to the saveFirebaseUsers() and dispatch(),
-        otherwise, we will have a different id reference between firebase and our local store, this may causes
-        possible issues in future if the user don't reload the page and try to save the pokemon with a different id that doesn't exists in firebase */
         const userObj = {
           id: generateId(),
           name: currentName,
@@ -43,7 +38,7 @@ export const UserInput = () => {
         <input
           type="text"
           value={currentName}
-          onChange={handleInputChange} // we don't need to explicity pass the event to the function on this cases
+          onChange={handleInputChange}
           onKeyDown={handleInputChange}
           placeholder="Enter your name"
           style={{ padding: "5px", marginTop: "50px" }}

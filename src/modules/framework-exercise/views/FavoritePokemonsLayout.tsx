@@ -7,27 +7,22 @@ import { useSelectFavPokemon } from "src/modules/framework-exercise/store/slice/
 import { PokemonsGrid } from "src/components/PokemonsGrid";
 
 export const FavoritePokemonsLayout = () => {
-  const { userList, ...user } = useSelectUser();
+  const user = useSelectUser();
   const favoritePokemons = useSelectFavPokemon();
   const [pokeList, setPokeList] = useState([]);
   const navigateTo = useNavigate();
 
-  // console.log({ favoritePokemons });
   useEffect(() => {
     if (user.name === "") {
       navigateTo(ROUTES.POKEMON);
     }
-    // good, but there are some other options to improve this by using dictionaries
-    // as well as storing the data in a different way to avoid duplicating data
-    // setPokeList(favoritePokemons.filter((item) => item.userName === user.name));
 
     const userFavPokemons = Object.values(favoritePokemons).filter(
-      (item) => item.userName === user.name
+      (item) => item.userIds?.[user.id]
     );
     setPokeList(userFavPokemons);
   }, [user.name]);
 
-  console.log({ pokeList });
   return (
     <>
       <div
