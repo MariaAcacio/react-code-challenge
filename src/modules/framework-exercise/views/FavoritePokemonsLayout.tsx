@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useSelectUser } from "src/hooks/useSelectUser";
+import { useSelectUser } from "src/modules/framework-exercise/store/slice/userSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "src/utils/routes";
 import { UserButtons } from "src/components/UserButtons";
-import { useSelectFavPokemon } from "src/hooks/useSelectFavPokemon";
+import { useSelectFavPokemon } from "src/modules/framework-exercise/store/slice/pokemonSlice";
 import { PokemonsGrid } from "src/components/PokemonsGrid";
 
 export const FavoritePokemonsLayout = () => {
-  const { userList, ...user } = useSelectUser();
+  const user = useSelectUser();
   const favoritePokemons = useSelectFavPokemon();
   const [pokeList, setPokeList] = useState([]);
   const navigateTo = useNavigate();
@@ -16,9 +16,11 @@ export const FavoritePokemonsLayout = () => {
     if (user.name === "") {
       navigateTo(ROUTES.POKEMON);
     }
-    // good, but there are some other options to improve this by using dictionaries
-    // as well as storing the data in a different way to avoid duplicating data
-    setPokeList(favoritePokemons.filter((item) => item.userName === user.name));
+
+    const userFavPokemons = Object.values(favoritePokemons).filter(
+      (item) => item.userIds?.[user.id]
+    );
+    setPokeList(userFavPokemons);
   }, [user.name]);
 
   return (

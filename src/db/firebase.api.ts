@@ -1,6 +1,13 @@
 import "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore/lite";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore/lite";
 import { buildDictionary } from "src/utils/functions";
 
 const firebaseConfig = {
@@ -18,43 +25,57 @@ const db = getFirestore(app);
 // Pokemons
 export async function getFirebasePokemons() {
   const pokemonColllection = collection(db, "pokemons");
-  const pokemonSnapshot = await getDocs(pokemonColllection);
-  /* would be a better idea for performance, to transform the array into a dictionary
-  so will be faster to find the values in future queries */
-  const dictionary = buildDictionary(
-    pokemonSnapshot.docs.map((doc) => doc.data()),
-    "name"
-  );
-  console.log(dictionary);
-  const pokemonSavedList = pokemonSnapshot.docs.map((doc) => doc.data());
-  return pokemonSavedList;
+  try {
+    const pokemonSnapshot = await getDocs(pokemonColllection);
+    const dictionary = buildDictionary(
+      pokemonSnapshot.docs.map((doc) => doc.data()),
+      "name"
+    );
+    return dictionary;
+  } catch (e) {
+    console.log("error getting the pokemons", e);
+  }
 }
 
 export async function saveFirebasePokemon(pokemon) {
-  const pokemonCollection = collection(db, "pokemons");
-  // here depending how are you storing the data, it's a better idea to direcly update the current pokemon document if exists by adding the new user to the array of users that have saved it or create a new document with the pokemon data and the array of users that have saved it instead of creating a new document for each user that saves the same pokemon
+  const pokemonDoc = doc(db, "pokemons", pokemon.name);
   try {
-    await addDoc(pokemonCollection, pokemon);
+    await setDoc(pokemonDoc, pokemon);
+  } catch (e) {
+    console.log("error adding the document", e);
+  }
+}
+export async function updateFirebasePokemon(pokemon) {
+  const pokemonDoc = doc(db, "pokemons", pokemon.name);
+  try {
+    await updateDoc(pokemonDoc, { userIds: pokemon.userIds });
   } catch (e) {
     console.log("error adding the document", e);
   }
 }
 
 // Users
-// this function doesn't have try/catch, so if it fails, the app may crash
 export async function getFirebaseUsers() {
   const userColllection = collection(db, "users");
-  const userSnapshot = await getDocs(userColllection);
-  // same comment as above about the dictionaries
-  const userSavedList = userSnapshot.docs.map((doc) => doc.data());
-  return userSavedList;
+  try {
+    const userSnapshot = await getDocs(userColllection);
+    const dictionary = buildDictionary(
+      userSnapshot.docs.map((doc) => doc.data()),
+      "name"
+    );
+    console.log({ dictionary });
+
+    return dictionary;
+  } catch (e) {
+    console.log("error getting the users", e);
+  }
 }
 
 export async function saveFirebaseUsers(userDetails) {
-  const userCollection = collection(db, "users");
+  const userDoc = doc(db, "users", userDetails.name);
 
   try {
-    await addDoc(userCollection, userDetails);
+    await setDoc(userDoc, userDetails);
   } catch (e) {
     console.log("error adding the document", e);
   }

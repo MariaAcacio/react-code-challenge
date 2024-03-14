@@ -14,18 +14,19 @@
  * console.log(result);
  * // Output: { '1': { id: 1, name: 'John' }, '2': { id: 2, name: 'Jane' } }
  */
-export function buildDictionary(
-  array: Array<{ [key: string]: any }>,
+
+export const buildDictionary = (
+  array: any[],
   key: string
-): { [key: string]: any } {
-  const result: { [key: string]: any } = {};
-  for (const item of array) {
-    if (key in item) {
-      result[item[key]] = item;
-    }
-  }
-  return result;
-}
+): Record<string, any> => {
+  const dictionary = array.reduce((acc, item) => {
+    return {
+      ...acc,
+      [item[key]]: item,
+    };
+  }, {});
+  return dictionary;
+};
 
 /**
  * This function takes a string and returns a number that matches the regular expression /\/(\d{1,3})\//.
@@ -46,13 +47,6 @@ export function extractNumber(str: string): number | null {
   return match ? parseInt(match[1]) : null;
 }
 
-// where do you use this function?
-export const getIdFromUrl = (url: string) => {
-  // Example url: "https://pokeapi.co/api/v2/pokemon/1/"
-  const parts = url.split("/");
-  return parseInt(parts.at(-2));
-};
-
 export const getNamesFromArray = (array, attribute) => {
   const names = array.map((item) => item[attribute].name);
   return names;
@@ -63,10 +57,13 @@ export const generateId = () => {
   return Math.floor(10000 + Math.random() * 90000);
 };
 
-export const isPokemonAlreadyFavorite = ({ pokemonList, pokemonId, userName }) => {
-  const favoriteFound = pokemonList.find(
-    (item) => item.id === pokemonId && item.userName === userName
-  );
-  const isAlreadySaved = userName?.name !== "" && Boolean(favoriteFound);
-  return isAlreadySaved;
+export const getUsersWithThisPokemon = (dictionary, id) => {
+  if (!dictionary) return { [id]: true };
+  if (dictionary[id]) {
+    const newObject = { ...dictionary };
+    delete newObject[id];
+    return newObject;
+  }
+
+  return { ...dictionary, [id]: true };
 };

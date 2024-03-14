@@ -11,14 +11,22 @@ export type PokemonDetailsType = {
   sprites: SpritesType;
 };
 
-export type FavoritePokemonsType = {
+export type FavoritePokemonType = {
   userName: string;
-  userId: number;
+  userIds: UserIdsType;
   name: string;
   id: number;
   sprite: string;
   abilities: string[];
   types: string[];
+};
+
+type UserIdsType = {
+  [key: number]: boolean;
+};
+
+export type FavoritePokemonsType = {
+  [key: string]: FavoritePokemonType;
 };
 
 export type AbilityType = {
