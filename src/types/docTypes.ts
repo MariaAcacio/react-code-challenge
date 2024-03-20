@@ -12,7 +12,6 @@ export type PokemonDetailsType = {
 };
 
 export type FavoritePokemonType = {
-  userName: string;
   userIds: UserIdsType;
   name: string;
   id: number;
@@ -24,7 +23,10 @@ export type FavoritePokemonType = {
 type UserIdsType = {
   [key: number]: boolean;
 };
-
+export type UserObjectType = {
+  id: number;
+  name: string;
+};
 export type FavoritePokemonsType = {
   [key: string]: FavoritePokemonType;
 };

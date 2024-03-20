@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getFirebaseUsers } from "src/db/firebase.api";
+import { getFirebaseData } from "src/db/firebase.api";
 import { useSelectUser } from "src/modules/framework-exercise/store/slice/userSlice";
 import {
   setUser,
@@ -14,7 +14,7 @@ export const UserButtons = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const fetchedUsers = await getFirebaseUsers();
+      const fetchedUsers = await getFirebaseData("users");
       dispatch(setUserList(fetchedUsers));
     };
     if (userListArray.length === 0) {

@@ -5,14 +5,12 @@ import {
   getNamesFromArray,
   getUsersWithThisPokemon,
 } from "src/utils/functions";
-import {
-  saveFirebasePokemon,
-  updateFirebasePokemon,
-} from "src/db/firebase.api";
+import { updateFirebasePokemon, saveFirebaseData } from "src/db/firebase.api";
 import { useSelectUser } from "src/modules/framework-exercise/store/slice/userSlice";
 import { useState } from "react";
 import { MapList } from "src/components/MapList";
 import "src/css/SinglePokemonStyles.css";
+import { FavoritePokemonType } from "src/types/docTypes";
 
 export const SinglePokemon = ({ pokemonInfo }) => {
   const [isShinySprite, setIsShinySprite] = useState(false);
@@ -27,7 +25,7 @@ export const SinglePokemon = ({ pokemonInfo }) => {
     : pokemonInfo.sprites.front_default;
 
   const handleSavePokemon = async () => {
-    const favPokemonSavedInfo = {
+    const favPokemonSavedInfo: FavoritePokemonType = {
       userIds: getUsersWithThisPokemon(
         favoritePokemon[pokemonInfo.name]?.userIds,
         userInfo.id
@@ -42,7 +40,7 @@ export const SinglePokemon = ({ pokemonInfo }) => {
     try {
       await (isPokemonInDb
         ? updateFirebasePokemon(favPokemonSavedInfo)
-        : saveFirebasePokemon(favPokemonSavedInfo));
+        : saveFirebaseData(favPokemonSavedInfo, "pokemons"));
       dispatch(
         setfavoritePokemons({
           ...favoritePokemon,

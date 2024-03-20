@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { saveFirebaseUsers } from "src/db/firebase.api";
+import { saveFirebaseData } from "src/db/firebase.api";
 import { useSelectUser } from "src/modules/framework-exercise/store/slice/userSlice";
 import { setUser } from "src/modules/framework-exercise/store/slice/userSlice";
 import { generateId } from "src/utils/functions";
@@ -24,7 +24,7 @@ export const UserInput = () => {
           id: generateId(),
           name: currentName,
         };
-        await saveFirebaseUsers(userObj);
+        await saveFirebaseData(userObj, "users");
         dispatch(setUser(userObj));
       }
     } catch (error) {

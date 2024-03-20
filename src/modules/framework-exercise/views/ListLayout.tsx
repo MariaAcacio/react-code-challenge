@@ -7,7 +7,7 @@ import { List } from "./List";
 import { ROUTES } from "src/utils/routes";
 import { UserInput } from "src/components/UserInput";
 import { UserButtons } from "src/components/UserButtons";
-import { getFirebasePokemons } from "src/db/firebase.api";
+import { getFirebaseData } from "src/db/firebase.api";
 import { setfavoritePokemons } from "../store/slice/pokemonSlice";
 
 export const ListLayout = () => {
@@ -18,7 +18,7 @@ export const ListLayout = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const firebasePokemons = await getFirebasePokemons();
+      const firebasePokemons = await getFirebaseData("pokemons");
       dispatch(setfavoritePokemons(firebasePokemons));
     };
     fetchData();

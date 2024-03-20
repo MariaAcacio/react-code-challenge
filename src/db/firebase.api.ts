@@ -9,6 +9,7 @@ import {
   setDoc,
 } from "firebase/firestore/lite";
 import { buildDictionary } from "src/utils/functions";
+import { FavoritePokemonType, UserObjectType } from "src/types/docTypes";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDf65SSRenl4mXiZKSVPa4V4z8ilmzac80",
@@ -22,25 +23,27 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Pokemons
-export async function getFirebasePokemons() {
-  const pokemonColllection = collection(db, "pokemons");
+export async function getFirebaseData(collectionName: string) {
+  const dataColllection = collection(db, collectionName);
   try {
-    const pokemonSnapshot = await getDocs(pokemonColllection);
+    const dataSnapshot = await getDocs(dataColllection);
     const dictionary = buildDictionary(
-      pokemonSnapshot.docs.map((doc) => doc.data()),
+      dataSnapshot.docs.map((doc) => doc.data()),
       "name"
     );
     return dictionary;
   } catch (e) {
-    console.log("error getting the pokemons", e);
+    console.log("error getting the data", e);
   }
 }
+export async function saveFirebaseData(
+  data: FavoritePokemonType | UserObjectType,
+  collectionName: string
+) {
+  const dataDoc = doc(db, collectionName, data.name);
 
-export async function saveFirebasePokemon(pokemon) {
-  const pokemonDoc = doc(db, "pokemons", pokemon.name);
   try {
-    await setDoc(pokemonDoc, pokemon);
+    await setDoc(dataDoc, data);
   } catch (e) {
     console.log("error adding the document", e);
   }
@@ -49,33 +52,6 @@ export async function updateFirebasePokemon(pokemon) {
   const pokemonDoc = doc(db, "pokemons", pokemon.name);
   try {
     await updateDoc(pokemonDoc, { userIds: pokemon.userIds });
-  } catch (e) {
-    console.log("error adding the document", e);
-  }
-}
-
-// Users
-export async function getFirebaseUsers() {
-  const userColllection = collection(db, "users");
-  try {
-    const userSnapshot = await getDocs(userColllection);
-    const dictionary = buildDictionary(
-      userSnapshot.docs.map((doc) => doc.data()),
-      "name"
-    );
-    console.log({ dictionary });
-
-    return dictionary;
-  } catch (e) {
-    console.log("error getting the users", e);
-  }
-}
-
-export async function saveFirebaseUsers(userDetails) {
-  const userDoc = doc(db, "users", userDetails.name);
-
-  try {
-    await setDoc(userDoc, userDetails);
   } catch (e) {
     console.log("error adding the document", e);
   }
