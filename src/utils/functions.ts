@@ -67,3 +67,7 @@ export const getUsersWithThisPokemon = (dictionary, id) => {
 
   return { ...dictionary, [id]: true };
 };
+
+export function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

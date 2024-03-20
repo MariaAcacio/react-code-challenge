@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { PokemonType } from "src/types/docTypes";
+import { capitalizeFirstLetter } from "src/utils/functions";
 import { ROUTES } from "src/utils/routes";
 
 export const List = ({ pokemonList }: { pokemonList?: PokemonType[] }) => {
@@ -13,7 +14,7 @@ export const List = ({ pokemonList }: { pokemonList?: PokemonType[] }) => {
               className="text-primary text-decoration-none fs-5"
               to={`${ROUTES.POKEMON}/${item.id}`}
             >
-              {item.name}
+              {capitalizeFirstLetter(item.name)}
             </Link>
           </li>
         ))}

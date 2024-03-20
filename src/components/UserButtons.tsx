@@ -6,6 +6,8 @@ import {
   setUser,
   setUserList,
 } from "src/modules/framework-exercise/store/slice/userSlice";
+import { capitalizeFirstLetter } from "src/utils/functions";
+import { CollectionNamesEnum } from "src/utils/constants";
 
 export const UserButtons = () => {
   const { userList } = useSelectUser();
@@ -14,7 +16,7 @@ export const UserButtons = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const fetchedUsers = await getFirebaseData("users");
+      const fetchedUsers = await getFirebaseData(CollectionNamesEnum.USERS);
       dispatch(setUserList(fetchedUsers));
     };
     if (userListArray.length === 0) {
@@ -41,7 +43,7 @@ export const UserButtons = () => {
           key={item.id}
           onClick={() => dispatch(setUser({ id: item.id, name: item.name }))}
         >
-          {item.name}
+          {capitalizeFirstLetter(item.name)}
         </button>
       ))}
     </div>

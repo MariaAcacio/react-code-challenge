@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore/lite";
 import { buildDictionary } from "src/utils/functions";
 import { FavoritePokemonType, UserObjectType } from "src/types/docTypes";
+import { CollectionNamesEnum } from "src/utils/constants";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDf65SSRenl4mXiZKSVPa4V4z8ilmzac80",
@@ -49,7 +50,7 @@ export async function saveFirebaseData(
   }
 }
 export async function updateFirebasePokemon(pokemon) {
-  const pokemonDoc = doc(db, "pokemons", pokemon.name);
+  const pokemonDoc = doc(db, CollectionNamesEnum.POKEMONS, pokemon.name);
   try {
     await updateDoc(pokemonDoc, { userIds: pokemon.userIds });
   } catch (e) {

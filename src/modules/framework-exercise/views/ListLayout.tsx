@@ -9,6 +9,7 @@ import { UserInput } from "src/components/UserInput";
 import { UserButtons } from "src/components/UserButtons";
 import { getFirebaseData } from "src/db/firebase.api";
 import { setfavoritePokemons } from "../store/slice/pokemonSlice";
+import { CollectionNamesEnum } from "src/utils/constants";
 
 export const ListLayout = () => {
   const { data, isLoading, isError } = useGetPokemonsQuery("");
@@ -18,7 +19,9 @@ export const ListLayout = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const firebasePokemons = await getFirebaseData("pokemons");
+      const firebasePokemons = await getFirebaseData(
+        CollectionNamesEnum.POKEMONS
+      );
       dispatch(setfavoritePokemons(firebasePokemons));
     };
     fetchData();

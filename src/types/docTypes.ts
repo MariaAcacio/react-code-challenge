@@ -27,6 +27,10 @@ export type UserObjectType = {
   id: number;
   name: string;
 };
+export type UserListType = {
+  [key: string]: UserObjectType;
+};
+
 export type FavoritePokemonsType = {
   [key: string]: FavoritePokemonType;
 };
@@ -41,7 +45,7 @@ type pokemonSubType = {
   url: string;
 };
 
-type PokemonTypeType = {
+export type PokemonTypeType = {
   slot: number;
   type: pokemonSubType;
 };
@@ -292,4 +296,56 @@ type SpritesType = {
   front_shiny_female: null;
   other: OtherType;
   versions: VersionsType;
+};
+
+export type AbilitiesType = {
+  ability: pokemonSubType;
+  is_hidden: boolean;
+  slot: number;
+};
+
+type CriesType = {
+  latest: string;
+  legacy: string;
+};
+type Game_indicesType = {
+  game_index: number;
+  version: pokemonSubType;
+};
+type MovesType = {
+  move: pokemonSubType;
+  version_group_details: Version_group_detailsType[];
+};
+type Version_group_detailsType = {
+  level_learned_at: number;
+  move_learn_method: pokemonSubType;
+  version_group: pokemonSubType;
+};
+type StatsType = {
+  base_stat: number;
+  effort: number;
+  stat: pokemonSubType;
+};
+
+export type SinglePokemonType = {
+  abilities: AbilitiesType[];
+  base_experience: number;
+  cries: CriesType;
+  forms: pokemonSubType[];
+  game_indices: Game_indicesType[];
+  height: number;
+  held_items: any[];
+  id: number;
+  is_default: boolean;
+  location_area_encounters: string;
+  moves: MovesType[];
+  name: string;
+  order: number;
+  past_abilities: any[];
+  past_types: any[];
+  species: pokemonSubType;
+  sprites: SpritesType;
+  stats: StatsType[];
+  types: PokemonTypeType[];
+  weight: number;
 };

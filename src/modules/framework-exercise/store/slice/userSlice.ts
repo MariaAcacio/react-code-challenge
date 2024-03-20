@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { StoreType } from "../store";
+import { UserListType } from "src/types/docTypes";
 
 type UserSliceType = {
   name: string;
   id: number;
   userList: UserListType;
-};
-type UserListType = {
-  [key: string]: { name: string; id: number };
 };
 
 const initialState: UserSliceType = {

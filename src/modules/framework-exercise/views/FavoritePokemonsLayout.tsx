@@ -5,11 +5,12 @@ import { ROUTES } from "src/utils/routes";
 import { UserButtons } from "src/components/UserButtons";
 import { useSelectFavPokemon } from "src/modules/framework-exercise/store/slice/pokemonSlice";
 import { PokemonsGrid } from "src/components/PokemonsGrid";
+import { FavoritePokemonType } from "src/types/docTypes";
 
 export const FavoritePokemonsLayout = () => {
   const user = useSelectUser();
   const favoritePokemons = useSelectFavPokemon();
-  const [pokeList, setPokeList] = useState([]);
+  const [pokeList, setPokeList] = useState<FavoritePokemonType[]>([]);
   const navigateTo = useNavigate();
 
   useEffect(() => {

@@ -1,7 +1,15 @@
 import "src/css/PokemonsGridStyles.css";
 import { ThCell } from "./ThCell";
+import { capitalizeFirstLetter } from "src/utils/functions";
+import { MapListForGrid } from "./MapListForGrid";
+import { AttributeNamesEnum } from "src/utils/constants";
+import { FavoritePokemonType } from "src/types/docTypes";
 
-export const PokemonsGrid = ({ pokeList }) => {
+export const PokemonsGrid = ({
+  pokeList,
+}: {
+  pokeList: FavoritePokemonType[];
+}) => {
   const tableTitles = ["Picture", "Name", "Ability", "Type"];
   const hasPokemons = pokeList.length > 0;
   return (
@@ -31,16 +39,18 @@ export const PokemonsGrid = ({ pokeList }) => {
                   style={{ width: "100px" }}
                 />
               </td>
-              <td className="tdStyle">{item.name}</td>
+              <td className="tdStyle">{capitalizeFirstLetter(item.name)}</td>
               <td className="tdStyle">
-                {item.abilities.map((ability, ind) => (
-                  <p key={ind}>{ability}</p>
-                ))}
+                <MapListForGrid
+                  list={item}
+                  attribute={AttributeNamesEnum.ABILITIES}
+                />
               </td>
               <td className="tdStyle">
-                {item.types.map((type, ind) => (
-                  <p key={ind}>{type}</p>
-                ))}
+                <MapListForGrid
+                  list={item}
+                  attribute={AttributeNamesEnum.TYPES}
+                />
               </td>
             </tr>
           ))

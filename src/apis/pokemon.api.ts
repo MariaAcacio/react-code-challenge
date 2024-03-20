@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { extractNumber } from "src/utils/functions";
+import { SinglePokemonType } from "src/types/docTypes";
 
 type BasePokemonType = {
   name: string;
@@ -19,11 +20,11 @@ export const pokemonApi = createApi({
       transformResponse: (response: ResponsePokemonType) => {
         return response.results.map((pokemon: BasePokemonType) => ({
           name: pokemon.name,
-          id: extractNumber(pokemon.url), // extract the id using a regex instead split the array
+          id: extractNumber(pokemon.url),
         }));
       },
     }),
-    getPokemonById: builder.query<BasePokemonType, string>({
+    getPokemonById: builder.query<SinglePokemonType, string>({
       query: (id) => `pokemon/${id}`,
     }),
   }),

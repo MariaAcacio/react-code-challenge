@@ -1,3 +1,6 @@
+import { capitalizeFirstLetter } from "src/utils/functions";
+import { AbilitiesType, PokemonTypeType } from "src/types/docTypes";
+
 export const MapList = ({
   title,
   attribute,
@@ -5,14 +8,14 @@ export const MapList = ({
 }: {
   title: string;
   attribute: string;
-  list: any[];
+  list: AbilitiesType[] | PokemonTypeType[];
 }) => {
   return (
     <div style={{ display: "flex", gap: "13px" }}>
       <h5>{`${title}:`}</h5>
-      {list?.map((item, ind) => (
+      {list?.map((item: AbilitiesType | PokemonTypeType, ind: number) => (
         <p key={ind} style={{ fontSize: "18px" }}>
-          {item[attribute].name}
+          {capitalizeFirstLetter(item[attribute].name)}
         </p>
       ))}
     </div>

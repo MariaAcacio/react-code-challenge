@@ -3,28 +3,33 @@ import { useDispatch } from "react-redux";
 import { saveFirebaseData } from "src/db/firebase.api";
 import { useSelectUser } from "src/modules/framework-exercise/store/slice/userSlice";
 import { setUser } from "src/modules/framework-exercise/store/slice/userSlice";
-import { generateId } from "src/utils/functions";
+import { capitalizeFirstLetter, generateId } from "src/utils/functions";
+import { CollectionNamesEnum } from "src/utils/constants";
 
 export const UserInput = () => {
   const [currentName, setCurrentName] = useState("");
   const { userList, ...user } = useSelectUser();
   const dispatch = useDispatch();
 
-  const handleInputChange = async (evnt) => {
+  const handleInputChange = (evnt: React.ChangeEvent<HTMLInputElement>) => {
     const newlyAddedName = evnt.target.value;
-    setCurrentName(newlyAddedName);
+    setCurrentName(newlyAddedName.toLowerCase());
+  };
+
+  const handleOnKeyDown = async (
+    evnt: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     try {
       if (evnt.key === "Enter") {
-        const isRepeated = userList.hasOwnProperty(newlyAddedName);
+        const isRepeated = userList.hasOwnProperty(currentName);
         if (currentName === "" || isRepeated) {
           return;
         }
-
         const userObj = {
           id: generateId(),
           name: currentName,
         };
-        await saveFirebaseData(userObj, "users");
+        await saveFirebaseData(userObj, CollectionNamesEnum.USERS);
         dispatch(setUser(userObj));
       }
     } catch (error) {
@@ -39,7 +44,7 @@ export const UserInput = () => {
           type="text"
           value={currentName}
           onChange={handleInputChange}
-          onKeyDown={handleInputChange}
+          onKeyDown={handleOnKeyDown}
           placeholder="Enter your name"
           style={{ padding: "5px", marginTop: "50px" }}
         />
@@ -49,7 +54,7 @@ export const UserInput = () => {
           style={{ padding: "5px", marginTop: "50px", cursor: "pointer" }}
           className="pointer-event"
         >
-          Welcome {user.name}
+          Welcome {capitalizeFirstLetter(user.name)}
         </h1>
       )}
     </>
