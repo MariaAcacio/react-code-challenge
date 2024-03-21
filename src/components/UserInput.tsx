@@ -38,7 +38,7 @@ export const UserInput = () => {
   };
 
   return (
-    <>
+    <div className="flex justify-center mb-8">
       {user.name === "" ? (
         <input
           type="text"
@@ -46,17 +46,16 @@ export const UserInput = () => {
           onChange={handleInputChange}
           onKeyDown={handleOnKeyDown}
           placeholder="Enter your name"
-          style={{ padding: "5px", marginTop: "50px" }}
+          className="p-3  mt-9 border-2 border-blue-2 rounded-4 w-60 md:mt-20 md:w-96"
         />
       ) : (
         <h1
           onClick={() => dispatch(setUser({ id: 0, name: "" }))}
-          style={{ padding: "5px", marginTop: "50px", cursor: "pointer" }}
-          className="pointer-event"
+          className="cursor-pointer mt-12 font-bold text-4xl p-2 md:mt-20 md:text-6xl"
         >
           Welcome {capitalizeFirstLetter(user.name)}
         </h1>
       )}
-    </>
+    </div>
   );
 };

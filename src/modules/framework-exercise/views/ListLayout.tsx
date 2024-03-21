@@ -29,18 +29,8 @@ export const ListLayout = () => {
 
   const isNoUser = user.name === "";
 
-  const favoriteBtnStyle = {
-    backgroundColor: isNoUser ? "white" : "#FFCC01",
-    borderRadius: "25px",
-    border: "1px solid #3462AE",
-    padding: "3px",
-    fontSize: "1.2rem",
-    fontWeight: "bold",
-    color: isNoUser ? "#c5d4ed" : "#2b5393",
-  };
-
   return (
-    <>
+    <div className="flex flex-col justify-center items-center gap-3 mb-9">
       <UserInput />
       <UserButtons />
 
@@ -53,13 +43,14 @@ export const ListLayout = () => {
       )}
 
       <button
-        className="px-4 p-2 mt-5"
-        style={favoriteBtnStyle}
+        className={`px-4 p-2 mt-5 ${
+          isNoUser ? "bg-white text-sky-100 " : "bg-blue-1 text-amber-300"
+        }  size-5 font-bold rounded-full w-auto h-auto hover:bg-blue-3 hover:transition-transform hover:scale-110`}
         onClick={() => navigate(ROUTES.FAVORITES)}
         disabled={isNoUser}
       >
         See favorite pokémons
       </button>
-    </>
+    </div>
   );
 };

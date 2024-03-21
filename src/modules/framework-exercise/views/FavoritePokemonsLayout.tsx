@@ -35,7 +35,7 @@ export const FavoritePokemonsLayout = () => {
           gap: "10px",
         }}
       >
-        <h2 className="mt-5">favorite pokemons</h2>
+        <h2 className="my-5 font-bold text-4xl  w-auto">favorite pokemons</h2>
         <UserButtons />
       </div>
       <PokemonsGrid pokeList={pokeList} />

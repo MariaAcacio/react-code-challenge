@@ -3,44 +3,29 @@ import { menuOptions } from "../data/menu";
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/instructions">
+    <nav className="bg-blue-3 py-4 px-6 flex items-center justify-between">
+      <div>
+        <Link to="/instructions">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
-            alt="Bootstrap"
+            alt="Pokemon Logo"
             width="100"
+            className="cursor-pointer w-14 md:w-32 "
           />
         </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            {menuOptions.map((option, index) => (
-              <li key={index} className="nav-item">
-                <NavLink
-                  className={({ isActive, isPending }) =>
-                    isPending ? "pending nav-link" : isActive ? "active nav-link" : "nav-link"
-                  }
-                  aria-current="page"
-                  to={option.path}
-                >
-                  {option.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
+      <ul className="flex">
+        {menuOptions.map((option, index) => (
+          <li key={index} className="ml-4">
+            <NavLink
+              className="text-gray-300 hover:text-blue-500 font-bold text-[12px] md:text-lg"
+              to={option.path}
+            >
+              {option.label}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 }

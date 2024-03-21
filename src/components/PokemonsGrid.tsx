@@ -19,6 +19,8 @@ export const PokemonsGrid = ({
         width: "100%",
         border: "2px solid black",
         borderRadius: "5px",
+        marginTop: "40px",
+        marginBottom: "40px",
       }}
     >
       <thead>
@@ -32,7 +34,7 @@ export const PokemonsGrid = ({
         {hasPokemons ? (
           pokeList.map((item) => (
             <tr key={item.id}>
-              <td className="tdStyle">
+              <td className="flex justify-center tdStyle ">
                 <img
                   src={item.sprite}
                   alt={item.name}
